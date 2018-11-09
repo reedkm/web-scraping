@@ -126,6 +126,102 @@ table_df.reset_index(drop = True)
 
 table_df.to_html('table.html')
 
+# URL of page to be scraped
+cerb_url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/cerberus_enhanced'
+
+# Retrieve page with the requests module
+def render_page(cerb_url):
+    driver = webdriver.Chrome()
+    driver.get(cerb_url)
+    time.sleep(3)
+    cerb_response = driver.page_source
+    #driver.quit()
+    return cerb_response
+    
+cerb_response = render_page(cerb_url)
+
+cerb_soup = BeautifulSoup(cerb_response, "html.parser")
+#print(cerb_soup.prettify())
+
+# Retrieve hemisphere info
+cerberus = cerb_soup.find('div', class_='wide-image-wrapper')
+# Retrieve hemisphere title
+cerb_title = cerb_soup.find('h2', class_='title').text
+# Identify and return image src
+cerb_link = cerb_soup.find('div', class_='downloads').a['href']
+
+# URL of page to be scraped
+schia_url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/schiaparelli_enhanced'
+
+# Retrieve page with the requests module
+def render_page(schia_url):
+    driver = webdriver.Chrome()
+    driver.get(schia_url)
+    time.sleep(3)
+    schia_response = driver.page_source
+    #driver.quit()
+    return schia_response
+    
+schia_response = render_page(schia_url)
+
+schia_soup = BeautifulSoup(schia_response, "html.parser")
+#print(schia_soup.prettify())
+
+# Retrieve hemisphere info
+schiaparelli = schia_soup.find('div', class_='wide-image-wrapper')
+# Retrieve hemisphere title
+schia_title = schia_soup.find('h2', class_='title').text
+# Identify and return image src
+schia_link = schia_soup.find('div', class_='downloads').a['href']
+
+# URL of page to be scraped
+syrtis_url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/syrtis_major_enhanced'
+
+# Retrieve page with the requests module
+def render_page(syrtis_url):
+    driver = webdriver.Chrome()
+    driver.get(syrtis_url)
+    time.sleep(3)
+    syrtis_response = driver.page_source
+    #driver.quit()
+    return syrtis_response
+    
+syrtis_response = render_page(syrtis_url)
+
+syrtis_soup = BeautifulSoup(syrtis_response, "html.parser")
+#print(cerb_soup.prettify())
+
+# Retrieve hemisphere info
+syrtis = syrtis_soup.find('div', class_='wide-image-wrapper')
+# Retrieve hemisphere title
+syrtis_title = syrtis_soup.find('h2', class_='title').text
+# Identify and return image src
+syrtis_link = syrtis_soup.find('div', class_='downloads').a['href']
+
+# URL of page to be scraped
+valles_url = 'https://astrogeology.usgs.gov/search/map/Mars/Viking/valles_marineris_enhanced'
+
+# Retrieve page with the requests module
+def render_page(valles_url):
+    driver = webdriver.Chrome()
+    driver.get(valles_url)
+    time.sleep(3)
+    valles_response = driver.page_source
+    #driver.quit()
+    return valles_response
+    
+valles_response = render_page(valles_url)
+
+valles_soup = BeautifulSoup(valles_response, "html.parser")
+#print(valles_soup.prettify())
+
+# Retrieve hemisphere info
+valles = valles_soup.find('div', class_='wide-image-wrapper')
+# Retrieve hemisphere title
+valles_title = valles_soup.find('h2', class_='title').text
+# Identify and return image src
+valles_link = valles_soup.find('div', class_='downloads').a['href']
+
 # Dictionary to be inserted as a MongoDB document
 mars_current = {
     'title': title,
@@ -134,7 +230,15 @@ mars_current = {
     'teaser': text,
     'imgTitle': img_title,
     'imgSrc': imageURL,
-    'weather': mars_weather
+    'weather': mars_weather,
+    'valles_title': valles_title,
+    'valles_link': valles_link,
+    'syrtis_title': syrtis_title,
+    'syrtis_link': syrtis_link,
+    'schia_title': schia_title,
+    'schia_link': schia_link,
+    'cerb_title': cerb_title,
+    'cerb_link': cerb_link
 }
 
 collection.insert_one(mars_current)
