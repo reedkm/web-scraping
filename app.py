@@ -14,21 +14,20 @@ conn = 'mongodb://localhost:27017/mars_db'
 client = flask_pymongo.PyMongo(app, uri=conn)
 
 # Connect to a database. Will create one if not already available.
-db = client
+# db = client
 
 # Set route
 @app.route('/')
 def index():
-    # Store the articles in a list
-    articles2 = list(db.db.mars_db.mars_current.find())
-    #print(articles)
-
-    # Return the template with the articles list passed in
-    return render_template('index.html', articles=articles2)
+    # Store the articles in a variable
+	articles = client.db.mars_current.find_one()
+	#print(articles)
+	# Return the template with the articles list passed in	
+	return render_template('index.html', articles=articles)
     
 @app.route("/scrape")
 def scraper():
-    current = db
+    current = client
 
     current_data = mars_scraping.scrape()
     
