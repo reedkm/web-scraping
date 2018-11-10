@@ -4,19 +4,21 @@ import mars_scraping
 
 app = Flask(__name__)
 
-# Use flask_pymongo to set up mongo connection
-app.config["MONGO_URI"] = "mongodb://localhost:27017/mars_scraping"
+# Create connection variable
+app.config["MONGO_URI"] = "mongodb://localhost:27017/mars_db"
 mongo = PyMongo(app)
-
 
 @app.route("/")
 def index():
-    current = mongo.db.mars_current.find_one()
-    return render_template("index.html", current=current)
+    articles =list(mongo.db.mars_current.find_one())
+    print(articles)
+
+    # Return the template with the articles list passed in
+    return render_template('index.html', articles=articles)
 
 @app.route("/scrape")
 def scraper():
-    current = mongo.db.listings
+    current = mongo.db.mars_current
 
     current_data = mars_scraping.scrape()
     
@@ -26,5 +28,4 @@ def scraper():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
 
