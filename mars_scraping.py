@@ -230,6 +230,7 @@ def scrape():
 	# Identify and return image src
 	valles_link = valles_soup.find('div', class_='downloads').a['href']
 
+
 	# Dictionary to be inserted as a MongoDB document
 	mars_current = {
 		'title': title,
@@ -248,7 +249,10 @@ def scrape():
 		'cerb_title': cerb_title,
 		'cerb_link': cerb_link
 	}
+	
+	return mars_current
 
-	collection.insert_one(mars_current)
+	#collection.insert_one(mars_current)
+	#collection.update_one(mars_current)
 
 

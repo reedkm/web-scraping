@@ -20,12 +20,12 @@
     <!-- Current Mars Info -->
     <div class="row">
       <div class="col-md-12">
-    {% for articles in articles %}
-      <h2>Latest Mars News</h2>
+    <!-- {% for articles in articles %} -->
+      <h2>Latest Mars News TEMPLATE</h2>
           <p>{{ articles.date }}: <a href="{{ articles.url }}">{{ articles.title }}</a></p>
           <p>{{ articles.teaser }}</p>
           
-                <h2>Featured Mars Images</h2>
+        <h2>Featured Mars Images</h2>
           <p>{{ articles.imgTitle }}</p>
           <p><img src="{{ articles.imgSrc }}" /></p>
           
@@ -37,7 +37,7 @@
           <p><img src="{{ articles.schia_link }}" />{{ articles.schia_title }}</p>
           <p><img src="{{ articles.syrtis_link }}" />{{ articles.syrtis_title }}</p>
               
-	{% endfor %}
+	<!-- {% endfor %} -->
     </div>
     </div>
   </div>
